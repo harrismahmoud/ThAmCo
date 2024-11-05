@@ -2,9 +2,14 @@
 {
     public class FoodBooking
     {
-        int FoodBookingId { get; set; }
-        int ClientReferenceId { get; set; }
-        int NumberOfGuests  { get; set; }
-        int MenuId { get; set; }
+        public int FoodBookingId { get; set; }
+        public int ClientReferenceId { get; set; }
+        public int NumberOfGuests  { get; set; }
+        public int MenuId { get; set; }
+
+        public ICollection<FoodItem> Items { get; set; }
+       
+        public ICollection<Menu> Menus { get; set; }
+
     }
 }

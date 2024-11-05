@@ -2,9 +2,12 @@
 {
     public class FoodItem
     {
-        int FoodItemId { get; set; }
-        string Description  { get; set; }
-        double UnitPrice { get; set; }
+       public  int FoodItemId { get; set; }
+       public  string Description  { get; set; }
+        public double UnitPrice { get; set; }
+
+        public ICollection<MenuFoodItem> MenuFoodItems { get; set; }
+
 
 
     }

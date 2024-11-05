@@ -2,8 +2,11 @@
 {
     public class MenuFoodItem
     {
-        int MenuId { get; set; }
-        int FoodMenuId { get; set; }
+        public int MenuId { get; set; }
+        public int FoodMenuId { get; set; }
 
+        public ICollection<Menu> Menus { get; set; }
+
+        public ICollection<FoodItem> FoodItems { get; set; }
     }
 }
