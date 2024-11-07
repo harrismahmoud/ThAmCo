@@ -19,6 +19,15 @@ namespace ThAmCo.Catering.Data
             var path = Environment.GetFolderPath(folder);
             DbPath = Path.Join(path, "Catering.db");
         }
+
+        // OnConfiguring to specify that the SQLite database engine will be used
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            base.OnConfiguring(optionsBuilder);
+            optionsBuilder.UseSqlite($"Data Source={DbPath}");
+        }
+
+
         //Defining the keys for the db
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -35,10 +44,12 @@ namespace ThAmCo.Catering.Data
 
             builder.Entity<MenuFoodItem>()
                 .HasKey(mfi => new { mfi.MenuId, mfi.FoodItems});
+           
 
+        
 
-            //Seed Data for the DB
-            builder.Entity<FoodItem>().HasData(
+        //Seed Data for the DB
+        builder.Entity<FoodItem>().HasData(
            new FoodItem { FoodItemId = 1, Name = "Pizza", Description = "Cheese and tomato pizza", Price = 12.99 },
            new FoodItem { FoodItemId = 2, Name = "Pasta", Description = "Spaghetti with marinara sauce", Price = 9.99 },
            new FoodItem { FoodItemId = 3, Name = "Salad", Description = "Mixed greens with balsamic dressing", Price = 5.99 },
