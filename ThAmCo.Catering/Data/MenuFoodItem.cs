@@ -3,6 +3,7 @@
     public class MenuFoodItem
     {
         public int MenuId { get; set; }
+
         public int FoodMenuId { get; set; }
 
         public ICollection<Menu> Menus { get; set; }
