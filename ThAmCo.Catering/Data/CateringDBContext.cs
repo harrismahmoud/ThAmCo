@@ -61,15 +61,6 @@ namespace ThAmCo.Catering.Data
 
 
 
-
-
-
-
-
-
-
-
-
             //Seed Data for the DB
             builder.Entity<FoodItem>().HasData(
            new FoodItem { FoodItemId = 1, Name = "Pizza", Description = "Cheese and tomato pizza", Price = 12.99 },
