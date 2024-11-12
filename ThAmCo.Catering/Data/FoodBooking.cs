@@ -7,7 +7,7 @@
         public int NumberOfGuests  { get; set; }
         public int MenuId { get; set; }
 
-        public ICollection<FoodItem> Items { get; set; }
+      
        
         public ICollection<Menu> Menus { get; set; }
 

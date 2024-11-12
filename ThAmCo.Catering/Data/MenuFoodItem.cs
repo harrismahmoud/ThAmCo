@@ -6,8 +6,10 @@
 
         public int FoodMenuId { get; set; }
 
-        public ICollection<Menu> Menus { get; set; }
+        public Menu Menus { get; set; }
 
-        public ICollection<FoodItem> FoodItems { get; set; }
+        public FoodItem FoodItems { get; set; }
+
+        
     }
 }

@@ -33,23 +33,45 @@ namespace ThAmCo.Catering.Data
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<FoodBooking>()
-                .HasKey(fb => new { fb.FoodBookingId});
-
-            builder.Entity<FoodItem>()
-                .HasKey(fi => fi.FoodItemId);
-
-            builder.Entity<Menu>()
-                .HasKey(mi => mi.MenuId);
+            
+            //Composite Key
+            builder.Entity<MenuFoodItem>()
+                .HasKey(mfi => new {mfi.MenuId, mfi.FoodMenuId});
+    
 
             builder.Entity<MenuFoodItem>()
-                .HasKey(mfi => new { mfi.MenuId, mfi.FoodItems});
-           
+                .HasOne(fi => fi.FoodItems)
+                .WithMany(fi => fi.MenuFoodItem)
+                .HasForeignKey(fi => fi.MenuId);
 
-        
 
-        //Seed Data for the DB
-        builder.Entity<FoodItem>().HasData(
+            builder.Entity<MenuFoodItem>()
+                .HasOne(fi => fi.FoodItems)
+                .WithMany(fi => fi.MenuFoodItem)
+                .HasForeignKey(fi => fi.FoodMenuId);
+
+            builder.Entity<FoodBooking>()
+                .HasKey(fb => new { fb.FoodBookingId });
+
+            builder.Entity<Menu>()
+               .HasKey(fi => fi.MenuId);
+
+            builder.Entity<FoodItem>()
+                .HasKey(fb => fb.FoodItemId);
+
+
+
+
+
+
+
+
+
+
+
+
+            //Seed Data for the DB
+            builder.Entity<FoodItem>().HasData(
            new FoodItem { FoodItemId = 1, Name = "Pizza", Description = "Cheese and tomato pizza", Price = 12.99 },
            new FoodItem { FoodItemId = 2, Name = "Pasta", Description = "Spaghetti with marinara sauce", Price = 9.99 },
            new FoodItem { FoodItemId = 3, Name = "Salad", Description = "Mixed greens with balsamic dressing", Price = 5.99 },

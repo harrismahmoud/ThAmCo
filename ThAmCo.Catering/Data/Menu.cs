@@ -9,7 +9,9 @@
         public string MenuName { get; set; }
 
         public ICollection<MenuFoodItem> Item { get; set; }
-        public ICollection<FoodItem> FoodItems { get; set; }
+
+
+       
 
 
     }
