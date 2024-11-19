@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ThAmCo.Catering.Data;
+using ThAmCo.Catering.DTO;
 
 namespace ThAmCo.Catering.Controllers
 {
@@ -72,15 +73,16 @@ namespace ThAmCo.Catering.Controllers
             return NoContent();
         }
 
-        // POST: api/FoodBookings
+        // POST: api/FoodBookings/AddFoodBooking
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<FoodBooking>> PostFoodBooking(FoodBooking foodBooking)
+        [HttpPost("AddFoodBooking")]
+        public async Task<ActionResult<FoodBooking>> PostFoodBooking(PostFoodBookingDTO foodBooking)
         {
-            _context.FoodBookings.Add(foodBooking);
+            var newFB = PostFoodBookingDTO.BuildFromDTO(foodBooking);
+            _context.FoodBookings.Add(newFB);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetFoodBooking", new { id = foodBooking.FoodBookingId }, foodBooking);
+            return CreatedAtAction("GetFoodBooking", new { id = newFB.FoodBookingId }, newFB);
         }
 
         // DELETE: api/FoodBookings/5
