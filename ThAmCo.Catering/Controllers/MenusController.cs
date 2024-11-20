@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ThAmCo.Catering.Data;
+using ThAmCo.Catering.DTO;
 
 namespace ThAmCo.Catering.Controllers
 {
@@ -75,9 +76,10 @@ namespace ThAmCo.Catering.Controllers
         // POST: api/Menus
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Menu>> PostMenu(Menu menu)
+        public async Task<ActionResult<Menu>> PostMenu(PostMenuDTO menu)
         {
-            _context.menus.Add(menu);
+            var newM = PostMenuDTO.BuildFromDTO(menu);
+            _context.menus.Add(newM);
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetMenu", new { id = menu.MenuId }, menu);
