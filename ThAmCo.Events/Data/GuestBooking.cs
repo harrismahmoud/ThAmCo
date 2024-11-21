@@ -3,12 +3,13 @@
     public class GuestBooking
     {
 
-        public int GuestBookingId { get; set; }
+        public int GuestId { get; set; }
 
-        public int PartyNumber { get; set; }
+        public int EventId { get; set; }
 
-        public DateTime BookingDate { get; set; }
+        public Guest Guest { get; set; }
 
         public Event Event { get; set; }
+        
     }
 }
