@@ -4,7 +4,7 @@
     {
         public string StaffRole { get; set; }
 
-        public Event EventId { get; set; }
+        public Event EventID { get; set; }
 
         public Staff? Staff { get; set; }
 

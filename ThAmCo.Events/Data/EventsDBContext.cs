@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Reflection.Emit;
 
 namespace ThAmCo.Events.Data
 {
@@ -39,17 +40,17 @@ namespace ThAmCo.Events.Data
                 .HasKey(e => e.StaffId);
 
             builder.Entity<Staffing>()
-                .HasKey(st => new { st.StaffRole, st.EventId });
+                .HasKey(st => new { st.StaffRole, st.EventID });
 
             builder.Entity<Event>()
                 .HasMany(st => st.staffing)
-                .WithOne(e => e.EventId)
-                .HasForeignKey(e => e.EventId);
+                .WithOne(e => e.EventID)
+                .HasForeignKey(e => e.EventID);
 
             builder.Entity<Staff>()
                 .HasMany(st=> st.staffing)
                 .WithOne(st=> st.Staff)
-                .HasForeignKey(s => s.EventId);
+                .HasForeignKey(s => s.EventID);
 
 
             builder.Entity<Event>()
@@ -59,7 +60,42 @@ namespace ThAmCo.Events.Data
             builder.Entity<Guest>()
                 .HasMany(gb => gb.GuestBooking)
                 .WithOne(g => g.Guest);
-                
+
+
+
+            builder.Entity<Event>().HasData(
+           new Event { EventId = 1, EventName = "Tech Conference", EventDateTime = new DateTime(2024, 12, 15) },
+           new Event { EventId = 2, EventName = "Art Exhibition", EventDateTime = new DateTime(2024, 12, 22) }
+       );
+
+            // Seed data for Guests
+            builder.Entity<Guest>().HasData(
+                new Guest { GuestId = 1, GuestName = "John Doe", GuestContact = 1234567890 },
+            new Guest { GuestId = 2, GuestName = "Jane Smith", GuestContact = 012345 },
+            new Guest { GuestId = 3, GuestName = "Alice Johnson", GuestContact = 0734567589 },
+            new Guest { GuestId = 4, GuestName = "Mark Williams", GuestContact = 1122334455 },
+            new Guest { GuestId = 5, GuestName = "Emily Davis", GuestContact = 667788990 }
+        );
+
+            // Seed data for GuestBookings
+            builder.Entity<GuestBooking>().HasData(
+                new GuestBooking { EventId = 1, GuestId = 1 },
+                new GuestBooking { EventId = 1, GuestId = 2},
+                new GuestBooking { EventId = 2, GuestId = 3}
+            );
+
+            // Seed data for Staff
+            builder.Entity<Staff>().HasData(
+                new Staff { StaffId = 1, StaffName = "Alice Brown", Email = "alice.brown@company.com" },
+                new Staff { StaffId = 2, StaffName = "Bob White", Email = "bob.white@company.com" }
+            );
+
+            builder.Entity<Staffing>().HasData(
+           new Staffing { StaffRole = "Event Manager"}, // Event Manager for Tech Conference
+           new Staffing { StaffRole = "Security" }, // Security for Tech Conference
+           new Staffing { StaffRole = "Curator" }, // Curator for Art Exhibition
+           new Staffing { StaffRole = "Security"}  // Security for Art Exhibition
+       );
 
         }
 

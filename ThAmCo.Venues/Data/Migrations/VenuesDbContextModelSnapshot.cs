@@ -15,7 +15,7 @@ namespace ThAmCo.Venues.Data.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "8.0.10");
+            modelBuilder.HasAnnotation("ProductVersion", "6.0.10");
 
             modelBuilder.Entity("ThAmCo.Venues.Data.Availability", b =>
                 {
@@ -34,7 +34,7 @@ namespace ThAmCo.Venues.Data.Migrations
 
                     b.HasIndex("VenueCode");
 
-                    b.ToTable("Availabilities");
+                    b.ToTable("Availabilities", (string)null);
 
                     b.HasData(
                         new
@@ -508,7 +508,7 @@ namespace ThAmCo.Venues.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("EventTypes");
+                    b.ToTable("EventTypes", (string)null);
 
                     b.HasData(
                         new
@@ -561,7 +561,7 @@ namespace ThAmCo.Venues.Data.Migrations
                     b.HasIndex("EventDate", "VenueCode")
                         .IsUnique();
 
-                    b.ToTable("Reservations");
+                    b.ToTable("Reservations", (string)null);
                 });
 
             modelBuilder.Entity("ThAmCo.Venues.Data.Suitability", b =>
@@ -579,7 +579,7 @@ namespace ThAmCo.Venues.Data.Migrations
 
                     b.HasIndex("VenueCode");
 
-                    b.ToTable("Suitabilities");
+                    b.ToTable("Suitabilities", (string)null);
 
                     b.HasData(
                         new
@@ -644,7 +644,7 @@ namespace ThAmCo.Venues.Data.Migrations
 
                     b.HasKey("Code");
 
-                    b.ToTable("Venues");
+                    b.ToTable("Venues", (string)null);
 
                     b.HasData(
                         new
