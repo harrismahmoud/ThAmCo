@@ -11,7 +11,7 @@
 
 
         public ICollection<GuestBooking> GuestBooking { get; set; }
-        public List<Staffing> staffing { get; set; }
+        public ICollection<Staffing> staffing { get; set; }
 
     }
 }

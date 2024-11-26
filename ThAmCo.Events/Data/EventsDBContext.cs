@@ -40,32 +40,43 @@ namespace ThAmCo.Events.Data
                 .HasKey(e => e.StaffId);
 
             builder.Entity<Staffing>()
-                .HasKey(st => new { st.StaffRole, st.EventID });
+                .HasKey(st => new { st.StaffRole, st.EventId });
+
+           
 
             builder.Entity<Event>()
                 .HasMany(st => st.staffing)
-                .WithOne(e => e.EventID)
-                .HasForeignKey(e => e.EventID);
+                .WithOne(e => e.Event)
+                .HasForeignKey(e => e.EventId);
 
             builder.Entity<Staff>()
                 .HasMany(st=> st.staffing)
                 .WithOne(st=> st.Staff)
-                .HasForeignKey(s => s.EventID);
+                .HasForeignKey(s => s.EventId);
 
+
+            builder.Entity<GuestBooking>()
+                .HasKey(st => new { st.EventId, st.GuestId });
 
             builder.Entity<Event>()
                 .HasMany(gb => gb.GuestBooking)
-                .WithOne(gb => gb.Event);
+                .WithOne(gb => gb.Event)
+                .HasForeignKey(s => s.EventId);
 
             builder.Entity<Guest>()
                 .HasMany(gb => gb.GuestBooking)
-                .WithOne(g => g.Guest);
+                .WithOne(g => g.Guest)
+                .HasForeignKey(s => s.EventId);
+
+
+
+
 
 
 
             builder.Entity<Event>().HasData(
-           new Event { EventId = 1, EventName = "Tech Conference", EventDateTime = new DateTime(2024, 12, 15) },
-           new Event { EventId = 2, EventName = "Art Exhibition", EventDateTime = new DateTime(2024, 12, 22) }
+           new Event { EventId = 1, EventName = "Tech Conference", EventDateTime = new DateTime(2024, 12, 15), EventType = "" },
+           new Event { EventId = 2, EventName = "Art Exhibition", EventDateTime = new DateTime(2024, 12, 22), EventType = "" }
        );
 
             // Seed data for Guests
@@ -91,10 +102,10 @@ namespace ThAmCo.Events.Data
             );
 
             builder.Entity<Staffing>().HasData(
-           new Staffing { StaffRole = "Event Manager"}, // Event Manager for Tech Conference
-           new Staffing { StaffRole = "Security" }, // Security for Tech Conference
-           new Staffing { StaffRole = "Curator" }, // Curator for Art Exhibition
-           new Staffing { StaffRole = "Security"}  // Security for Art Exhibition
+           new Staffing { StaffRole = "Event Manager", EventId = 1}, // Event Manager for Tech Conference
+           new Staffing { StaffRole = "Security", EventId = 1 }, // Security for Tech Conference
+           new Staffing { StaffRole = "Curator", EventId = 1 }, // Curator for Art Exhibition
+           new Staffing { StaffRole = "Security", EventId = 2}  // Security for Art Exhibition
        );
 
         }
