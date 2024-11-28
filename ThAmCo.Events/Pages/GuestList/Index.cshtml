@@ -1,0 +1,42 @@
+﻿@page
+@model ThAmCo.Events.Pages.GuestList.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Guest[0].GuestName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Guest[0].GuestContact)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Guest) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.GuestName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GuestContact)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.GuestId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.GuestId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.GuestId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

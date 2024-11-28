@@ -1,9 +1,16 @@
+using Microsoft.AspNetCore.Identity;
+using ThAmCo.Events.Data;
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddDbContext<EventsDBContext>();
 builder.Services.AddRazorPages();
-
 var app = builder.Build();
+
+
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -23,3 +30,7 @@ app.UseAuthorization();
 app.MapRazorPages();
 
 app.Run();
+
+
+
+

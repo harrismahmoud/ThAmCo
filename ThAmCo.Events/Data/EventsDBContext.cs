@@ -75,8 +75,8 @@ namespace ThAmCo.Events.Data
 
 
             builder.Entity<Event>().HasData(
-           new Event { EventId = 1, EventName = "Tech Conference", EventDateTime = new DateTime(2024, 12, 15), EventType = "" },
-           new Event { EventId = 2, EventName = "Art Exhibition", EventDateTime = new DateTime(2024, 12, 22), EventType = "" }
+           new Event { EventId = 1, EventName = "Tech Conference", EventDateTime = new DateTime(2024, 12, 15), EventType = "Conference" },
+           new Event { EventId = 2, EventName = "Art Exhibition", EventDateTime = new DateTime(2024, 12, 22), EventType = "Exhibition" }
        );
 
             // Seed data for Guests
