@@ -16,7 +16,7 @@ namespace ThAmCo.Events.Pages.GuestList
         private readonly ThAmCo.Events.Data.EventsDBContext _context;
 
         [BindProperty]
-        public GuestVM vm { get; set; } = new GuestVM();
+        public EditGuestVM vm { get; set; } = new EditGuestVM();
 
         public EditModel(ThAmCo.Events.Data.EventsDBContext context)
         {
@@ -30,10 +30,10 @@ namespace ThAmCo.Events.Pages.GuestList
         {
 
             vm.GuestId = GuestId;
-            //if (GuestId == null)
-            //{
-            //    return NotFound();
-            //}
+            if (GuestId == null)
+            {
+                return NotFound();
+            }
 
             var guest =  await _context.Guests.FirstOrDefaultAsync(m => m.GuestId == GuestId);
             if (guest == null)

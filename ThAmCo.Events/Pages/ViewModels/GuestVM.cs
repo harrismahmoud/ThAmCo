@@ -18,10 +18,10 @@ namespace ThAmCo.Events.Pages.ViewModels
         public bool IsValidContact => GuestContact.ToString().Length == 11; // Example validation
     }
 
-    //public class EditGuestVM : GuestVM
-    //{
-    //    public int GuestId { get; set; }
-    //}
+    public class EditGuestVM : GuestVM
+    {
+        public int GuestId { get; set; }
+    }
 
 
 
