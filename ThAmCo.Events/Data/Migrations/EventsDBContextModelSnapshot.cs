@@ -15,7 +15,7 @@ namespace ThAmCo.Events.Data.Migrations
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "8.0.10");
+            modelBuilder.HasAnnotation("ProductVersion", "9.0.0");
 
             modelBuilder.Entity("ThAmCo.Events.Data.Event", b =>
                 {
@@ -50,7 +50,7 @@ namespace ThAmCo.Events.Data.Migrations
                             EventId = 1,
                             EventDateTime = new DateTime(2024, 12, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EventName = "Tech Conference",
-                            EventType = "",
+                            EventType = "Conference",
                             FoodBookingId = 0,
                             ReservationId = 0
                         },
@@ -59,7 +59,7 @@ namespace ThAmCo.Events.Data.Migrations
                             EventId = 2,
                             EventDateTime = new DateTime(2024, 12, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EventName = "Art Exhibition",
-                            EventType = "",
+                            EventType = "Exhibition",
                             FoodBookingId = 0,
                             ReservationId = 0
                         });

@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using ThAmCo.Events.Data;
+using ThAmCo.Events.Pages.ViewModels;
 
 namespace ThAmCo.Events.Pages.GuestList
 {
@@ -13,13 +15,18 @@ namespace ThAmCo.Events.Pages.GuestList
     {
         private readonly ThAmCo.Events.Data.EventsDBContext _context;
 
+        [BindProperty]
+        public GuestVM vm { get; set; } = new GuestVM();
+
         public CreateModel(ThAmCo.Events.Data.EventsDBContext context)
         {
             _context = context;
         }
 
-        public IActionResult OnGet()
+        public IActionResult OnGet(int GuestId)
         {
+
+            vm.GuestId = GuestId;
             return Page();
         }
 
@@ -29,10 +36,9 @@ namespace ThAmCo.Events.Pages.GuestList
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+           
+            GuestVM vm = new GuestVM(); 
+           
 
             _context.Guests.Add(Guest);
             await _context.SaveChangesAsync();

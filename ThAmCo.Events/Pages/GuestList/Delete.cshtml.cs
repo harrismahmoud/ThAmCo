@@ -21,14 +21,14 @@ namespace ThAmCo.Events.Pages.GuestList
         [BindProperty]
         public Guest Guest { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int? GuestId)
         {
-            if (id == null)
+            if (GuestId == null)
             {
                 return NotFound();
             }
 
-            var guest = await _context.Guests.FirstOrDefaultAsync(m => m.GuestId == id);
+            var guest = await _context.Guests.FirstOrDefaultAsync(m => m.GuestId == GuestId);
 
             if (guest == null)
             {
@@ -41,14 +41,14 @@ namespace ThAmCo.Events.Pages.GuestList
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public async Task<IActionResult> OnPostAsync(int? GuestId)
         {
-            if (id == null)
+            if (GuestId == null)
             {
                 return NotFound();
             }
 
-            var guest = await _context.Guests.FindAsync(id);
+            var guest = await _context.Guests.FindAsync(GuestId);
             if (guest != null)
             {
                 Guest = guest;

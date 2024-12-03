@@ -7,12 +7,16 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ThAmCo.Events.Data;
+using ThAmCo.Events.Pages.ViewModels;
 
 namespace ThAmCo.Events.Pages.GuestList
 {
     public class EditModel : PageModel
     {
         private readonly ThAmCo.Events.Data.EventsDBContext _context;
+
+        [BindProperty]
+        public GuestVM vm { get; set; } = new GuestVM();
 
         public EditModel(ThAmCo.Events.Data.EventsDBContext context)
         {
@@ -22,14 +26,16 @@ namespace ThAmCo.Events.Pages.GuestList
         [BindProperty]
         public Guest Guest { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int GuestId)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
 
-            var guest =  await _context.Guests.FirstOrDefaultAsync(m => m.GuestId == id);
+            vm.GuestId = GuestId;
+            //if (GuestId == null)
+            //{
+            //    return NotFound();
+            //}
+
+            var guest =  await _context.Guests.FirstOrDefaultAsync(m => m.GuestId == GuestId);
             if (guest == null)
             {
                 return NotFound();
