@@ -22,14 +22,14 @@ namespace ThAmCo.Events.Pages.EventList
         [BindProperty]
         public Event Event { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int? EventId)
         {
-            if (id == null)
+            if (EventId == null)
             {
                 return NotFound();
             }
 
-            var Events =  await _context.Events.FirstOrDefaultAsync(m => m.EventId == id);
+            var Events =  await _context.Events.FirstOrDefaultAsync(m => m.EventId == EventId);
             if (Events == null)
             {
                 return NotFound();
@@ -68,9 +68,9 @@ namespace ThAmCo.Events.Pages.EventList
             return RedirectToPage("./Index");
         }
 
-        private bool EventExists(int id)
+        private bool EventExists(int EventId)
         {
-            return _context.Events.Any(e => e.EventId == id);
+            return _context.Events.Any(e => e.EventId == EventId);
         }
     }
 }

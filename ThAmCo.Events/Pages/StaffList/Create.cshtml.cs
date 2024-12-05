@@ -8,35 +8,31 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using ThAmCo.Events.Data;
 using ThAmCo.Events.Pages.ViewModels;
 
-namespace ThAmCo.Events.Pages.EventList
+namespace ThAmCo.Events.Pages.StaffList
 {
     public class CreateModel : PageModel
     {
         private readonly ThAmCo.Events.Data.EventsDBContext _context;
-
-        [BindProperty]
-        public EventVM vm { get; set; } = new EventVM();
 
         public CreateModel(ThAmCo.Events.Data.EventsDBContext context)
         {
             _context = context;
         }
 
-        public IActionResult OnGet(int EventId)
+        public IActionResult OnGet()
         {
-            vm.EventId = EventId;
             return Page();
         }
 
         [BindProperty]
-        public Event Event { get; set; } = default!;
+        public Staff Staff { get; set; } = default!;
 
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            EventVM vm = new EventVM();
+            StaffVM vm = new StaffVM();
 
-            _context.Events.Add(Event);
+            _context.staffs.Add(Staff);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
