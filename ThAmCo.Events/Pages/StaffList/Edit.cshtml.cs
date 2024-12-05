@@ -29,9 +29,12 @@ namespace ThAmCo.Events.Pages.StaffList
 
         public async Task<IActionResult> OnGetAsync(int StaffId, string StaffName, string Email )
         {
-            
+            vm.StaffId = StaffId;
+            vm.StaffName = StaffName;
+            vm.Email = Email;
 
-            
+
+
 
             var staff =  await _context.staffs.FirstOrDefaultAsync(m => m.StaffId == StaffId);
             if (staff == null)
@@ -40,9 +43,7 @@ namespace ThAmCo.Events.Pages.StaffList
             }
 
 
-            vm.StaffId = StaffId;
-            vm.StaffName = StaffName;
-            vm.Email = Email;
+           
             return Page();
         }
 

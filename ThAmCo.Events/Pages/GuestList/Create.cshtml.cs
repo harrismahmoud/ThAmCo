@@ -15,8 +15,7 @@ namespace ThAmCo.Events.Pages.GuestList
     {
         private readonly ThAmCo.Events.Data.EventsDBContext _context;
 
-        [BindProperty]
-        public GuestVM vm { get; set; } = new GuestVM();
+      
 
         public CreateModel(ThAmCo.Events.Data.EventsDBContext context)
         {
@@ -26,7 +25,7 @@ namespace ThAmCo.Events.Pages.GuestList
         public IActionResult OnGet(int GuestId)
         {
 
-            vm.GuestId = GuestId;
+            
             return Page();
         }
 
