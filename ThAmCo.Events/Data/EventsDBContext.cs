@@ -67,7 +67,7 @@ namespace ThAmCo.Events.Data
             builder.Entity<Guest>()
                 .HasMany(gb => gb.GuestBooking)
                 .WithOne(g => g.Guest)
-                .HasForeignKey(s => s.EventId);
+                .HasForeignKey(s => s.GuestId);
 
 
 
@@ -93,7 +93,8 @@ namespace ThAmCo.Events.Data
             builder.Entity<GuestBooking>().HasData(
                 new GuestBooking { EventId = 1, GuestId = 1 },
                 new GuestBooking { EventId = 1, GuestId = 2},
-                new GuestBooking { EventId = 2, GuestId = 3}
+                new GuestBooking { EventId = 2, GuestId = 3},
+                new GuestBooking { EventId = 2, GuestId = 4 }
             );
 
             // Seed data for Staff

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ThAmCo.Events.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class InitialCreate1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -75,8 +75,8 @@ namespace ThAmCo.Events.Data.Migrations
                         principalColumn: "EventId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_guestBookings_Guests_EventId",
-                        column: x => x.EventId,
+                        name: "FK_guestBookings_Guests_GuestId",
+                        column: x => x.GuestId,
                         principalTable: "Guests",
                         principalColumn: "GuestId",
                         onDelete: ReferentialAction.Cascade);
@@ -111,8 +111,8 @@ namespace ThAmCo.Events.Data.Migrations
                 columns: new[] { "EventId", "EventDateTime", "EventName", "EventType", "FoodBookingId", "ReservationId" },
                 values: new object[,]
                 {
-                    { 1, new DateTime(2024, 12, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tech Conference", "", 0, 0 },
-                    { 2, new DateTime(2024, 12, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), "Art Exhibition", "", 0, 0 }
+                    { 1, new DateTime(2024, 12, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "Tech Conference", "Conference", 0, 0 },
+                    { 2, new DateTime(2024, 12, 22, 0, 0, 0, 0, DateTimeKind.Unspecified), "Art Exhibition", "Exhibition", 0, 0 }
                 });
 
             migrationBuilder.InsertData(
@@ -143,7 +143,8 @@ namespace ThAmCo.Events.Data.Migrations
                 {
                     { 1, 1 },
                     { 1, 2 },
-                    { 2, 3 }
+                    { 2, 3 },
+                    { 2, 4 }
                 });
 
             migrationBuilder.InsertData(
@@ -156,6 +157,11 @@ namespace ThAmCo.Events.Data.Migrations
                     { 1, "Security" },
                     { 2, "Security" }
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_guestBookings_GuestId",
+                table: "guestBookings",
+                column: "GuestId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_staffings_EventId",

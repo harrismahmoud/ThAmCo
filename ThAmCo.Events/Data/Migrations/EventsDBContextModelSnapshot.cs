@@ -125,6 +125,8 @@ namespace ThAmCo.Events.Data.Migrations
 
                     b.HasKey("EventId", "GuestId");
 
+                    b.HasIndex("GuestId");
+
                     b.ToTable("guestBookings");
 
                     b.HasData(
@@ -142,6 +144,11 @@ namespace ThAmCo.Events.Data.Migrations
                         {
                             EventId = 2,
                             GuestId = 3
+                        },
+                        new
+                        {
+                            EventId = 2,
+                            GuestId = 4
                         });
                 });
 
@@ -225,7 +232,7 @@ namespace ThAmCo.Events.Data.Migrations
 
                     b.HasOne("ThAmCo.Events.Data.Guest", "Guest")
                         .WithMany("GuestBooking")
-                        .HasForeignKey("EventId")
+                        .HasForeignKey("GuestId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

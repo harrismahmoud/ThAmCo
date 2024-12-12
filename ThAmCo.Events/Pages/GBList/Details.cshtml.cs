@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ThAmCo.Events.Data;
 
-namespace ThAmCo.Events.Pages.GuestList
+namespace ThAmCo.Events.Pages.GBList
 {
     public class DetailsModel : PageModel
     {
@@ -18,23 +18,23 @@ namespace ThAmCo.Events.Pages.GuestList
             _context = context;
         }
 
-        public Guest Guest { get; set; } = default!;
+        public GuestBooking GuestBooking { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? GuestId)
+        public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (GuestId == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var guest = await _context.Guests.FirstOrDefaultAsync(m => m.GuestId == GuestId);
-            if (guest == null)
+            var guestbooking = await _context.guestBookings.FirstOrDefaultAsync(m => m.EventId == id);
+            if (guestbooking == null)
             {
                 return NotFound();
             }
             else
             {
-                Guest = guest;
+                GuestBooking = guestbooking;
             }
             return Page();
         }

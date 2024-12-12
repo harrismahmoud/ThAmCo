@@ -11,14 +11,14 @@ using ThAmCo.Events.Data;
 namespace ThAmCo.Events.Data.Migrations
 {
     [DbContext(typeof(EventsDBContext))]
-    [Migration("20241126144015_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20241212120737_InitialCreate1")]
+    partial class InitialCreate1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "8.0.10");
+            modelBuilder.HasAnnotation("ProductVersion", "9.0.0");
 
             modelBuilder.Entity("ThAmCo.Events.Data.Event", b =>
                 {
@@ -53,7 +53,7 @@ namespace ThAmCo.Events.Data.Migrations
                             EventId = 1,
                             EventDateTime = new DateTime(2024, 12, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EventName = "Tech Conference",
-                            EventType = "",
+                            EventType = "Conference",
                             FoodBookingId = 0,
                             ReservationId = 0
                         },
@@ -62,7 +62,7 @@ namespace ThAmCo.Events.Data.Migrations
                             EventId = 2,
                             EventDateTime = new DateTime(2024, 12, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EventName = "Art Exhibition",
-                            EventType = "",
+                            EventType = "Exhibition",
                             FoodBookingId = 0,
                             ReservationId = 0
                         });
@@ -128,6 +128,8 @@ namespace ThAmCo.Events.Data.Migrations
 
                     b.HasKey("EventId", "GuestId");
 
+                    b.HasIndex("GuestId");
+
                     b.ToTable("guestBookings");
 
                     b.HasData(
@@ -145,6 +147,11 @@ namespace ThAmCo.Events.Data.Migrations
                         {
                             EventId = 2,
                             GuestId = 3
+                        },
+                        new
+                        {
+                            EventId = 2,
+                            GuestId = 4
                         });
                 });
 
@@ -228,7 +235,7 @@ namespace ThAmCo.Events.Data.Migrations
 
                     b.HasOne("ThAmCo.Events.Data.Guest", "Guest")
                         .WithMany("GuestBooking")
-                        .HasForeignKey("EventId")
+                        .HasForeignKey("GuestId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

@@ -7,16 +7,12 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ThAmCo.Events.Data;
-using ThAmCo.Events.Pages.ViewModels;
 
-namespace ThAmCo.Events.Pages.GuestList
+namespace ThAmCo.Events.Pages.GBList
 {
     public class EditModel : PageModel
     {
         private readonly ThAmCo.Events.Data.EventsDBContext _context;
-
-        [BindProperty]
-        public EditGuestVM vm { get; set; } = new EditGuestVM();
 
         public EditModel(ThAmCo.Events.Data.EventsDBContext context)
         {
@@ -24,23 +20,23 @@ namespace ThAmCo.Events.Pages.GuestList
         }
 
         [BindProperty]
-        public Guest Guest { get; set; } = default!;
+        public GuestBooking GuestBooking { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int GuestId)
+        public async Task<IActionResult> OnGetAsync(int? id)
         {
-
-            vm.GuestId = GuestId;
-            if (GuestId == null)
+            if (id == null)
             {
                 return NotFound();
             }
 
-            var guest =  await _context.Guests.FirstOrDefaultAsync(m => m.GuestId == GuestId);
-            if (guest == null)
+            var guestbooking =  await _context.guestBookings.FirstOrDefaultAsync(m => m.EventId == id);
+            if (guestbooking == null)
             {
                 return NotFound();
             }
-            Guest = guest;
+            GuestBooking = guestbooking;
+           ViewData["EventId"] = new SelectList(_context.Events, "EventId", "EventId");
+           ViewData["EventId"] = new SelectList(_context.Guests, "GuestId", "GuestId");
             return Page();
         }
 
@@ -48,13 +44,12 @@ namespace ThAmCo.Events.Pages.GuestList
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-           
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            _context.Attach(Guest).State = EntityState.Modified;
+            _context.Attach(GuestBooking).State = EntityState.Modified;
 
             try
             {
@@ -62,7 +57,7 @@ namespace ThAmCo.Events.Pages.GuestList
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!GuestExists(Guest.GuestId))
+                if (!GuestBookingExists(GuestBooking.EventId))
                 {
                     return NotFound();
                 }
@@ -75,9 +70,9 @@ namespace ThAmCo.Events.Pages.GuestList
             return RedirectToPage("./Index");
         }
 
-        private bool GuestExists(int GuestId)
+        private bool GuestBookingExists(int id)
         {
-            return _context.Guests.Any(e => e.GuestId == GuestId);
+            return _context.guestBookings.Any(e => e.EventId == id);
         }
     }
 }
