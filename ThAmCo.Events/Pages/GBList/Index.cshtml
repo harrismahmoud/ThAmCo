@@ -5,7 +5,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Bookings</h1>
 
 <p>
     <a asp-page="Create">Create New</a>
@@ -26,15 +26,20 @@
 @foreach (var item in Model.GuestBooking) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Guest.GuestId)
+                @Html.DisplayFor(modelItem => item.GuestId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Event.EventId)
+                @Html.DisplayFor(modelItem => item.EventId)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    <a asp-page="./Edit" asp-route-EventId="@item.EventId">Edit</a> |
+                    <a asp-page="./Details" asp-route-EventId="@item.EventId">Details</a> |
+                    <a asp-page="./Delete" asp-route-EventId="@item.EventId">Delete</a>
+
+
+               @*  @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) | 
                 @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })  *@
             </td>
         </tr>
 }

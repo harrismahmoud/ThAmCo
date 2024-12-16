@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ThAmCo.Events.Data;
+using ThAmCo.Events.Pages.ViewModels;
 
 namespace ThAmCo.Events.Pages.EventList
 {
@@ -42,10 +43,7 @@ namespace ThAmCo.Events.Pages.EventList
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+            EventVM vm = new EventVM();
 
             _context.Attach(Event).State = EntityState.Modified;
 

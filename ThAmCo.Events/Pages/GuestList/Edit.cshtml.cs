@@ -48,11 +48,8 @@ namespace ThAmCo.Events.Pages.GuestList
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-           
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+
+            GuestVM vm = new GuestVM();
 
             _context.Attach(Guest).State = EntityState.Modified;
 
