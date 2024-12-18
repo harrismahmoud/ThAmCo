@@ -32,14 +32,12 @@
                 @Html.DisplayFor(modelItem => item.EventId)
             </td>
             <td>
-                    <a asp-page="./Edit" asp-route-EventId="@item.EventId">Edit</a> |
-                    <a asp-page="./Details" asp-route-EventId="@item.EventId">Details</a> |
-                    <a asp-page="./Delete" asp-route-EventId="@item.EventId">Delete</a>
+                 
 
 
-               @*  @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) | 
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })  *@
+                 @Html.ActionLink("Edit", "Edit", new {  id = item.EventId }) | 
+                @Html.ActionLink("Details", "Details", new {  id=item.GuestId  }) |
+                @Html.ActionLink("Delete", "Delete", new {  id=item.EventId  }) 
             </td>
         </tr>
 }

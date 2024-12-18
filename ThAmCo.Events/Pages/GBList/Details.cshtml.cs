@@ -20,14 +20,14 @@ namespace ThAmCo.Events.Pages.GBList
 
         public GuestBooking GuestBooking { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int? GuestId)
         {
-            if (id == null)
+            if (GuestId == null)
             {
                 return NotFound();
             }
 
-            var guestbooking = await _context.guestBookings.FirstOrDefaultAsync(m => m.EventId == id);
+            var guestbooking = await _context.guestBookings.FirstOrDefaultAsync(m => m.EventId == GuestId);
             if (guestbooking == null)
             {
                 return NotFound();
