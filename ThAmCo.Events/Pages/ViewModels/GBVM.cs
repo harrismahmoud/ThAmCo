@@ -6,6 +6,8 @@ namespace ThAmCo.Events.Pages.ViewModels
     {
         public int EventId { get; set; }
         public int GuestId { get; set; }
+
+        public Boolean attended { get; set; }
        
        
 

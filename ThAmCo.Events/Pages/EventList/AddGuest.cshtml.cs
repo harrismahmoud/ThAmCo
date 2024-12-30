@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ThAmCo.Events.Data;
-using ThAmCo.Events.Pages.ViewModels;
 
 namespace ThAmCo.Events.Pages.EventList
 {
@@ -25,7 +24,6 @@ namespace ThAmCo.Events.Pages.EventList
 
         public async Task<IActionResult> OnGetAsync(int? EventId)
         {
-            GBVM vm = new GBVM();
             if (EventId == null)
             {
                 return NotFound();
@@ -37,8 +35,8 @@ namespace ThAmCo.Events.Pages.EventList
                 return NotFound();
             }
             GuestBooking = guestbooking;
-           ViewData["EventId"] = new SelectList(_context.Events, "EventId", "EventId");
-           ViewData["EventId"] = new SelectList(_context.Guests, "GuestId", "GuestId");
+        
+           ViewData["GuestId"] = new SelectList(_context.Guests, "GuestId", "GuestName");
             return Page();
         }
 
@@ -46,8 +44,11 @@ namespace ThAmCo.Events.Pages.EventList
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            GBVM vm = new GBVM(); 
-            
+            if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
             _context.Attach(GuestBooking).State = EntityState.Modified;
 
             try
@@ -69,9 +70,9 @@ namespace ThAmCo.Events.Pages.EventList
             return RedirectToPage("./Index");
         }
 
-        private bool GuestBookingExists(int EventId)
+        private bool GuestBookingExists(int id)
         {
-            return _context.guestBookings.Any(e => e.EventId == EventId);
+            return _context.guestBookings.Any(e => e.EventId == id);
         }
     }
 }

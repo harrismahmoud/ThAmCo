@@ -16,25 +16,18 @@ namespace ThAmCo.Events.Pages.StaffList
     {
         private readonly ThAmCo.Events.Data.EventsDBContext _context;
 
-        [BindProperty]
-        public StaffVM vm { get; set; } = new StaffVM();
+  
 
         public EditModel(ThAmCo.Events.Data.EventsDBContext context)
         {
             _context = context;
         }
 
-        
+        [BindProperty]
         public Staff Staff { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int StaffId, string StaffName, string Email )
+        public async Task<IActionResult> OnGetAsync(int StaffId )
         {
-            vm.StaffId = StaffId;
-            vm.StaffName = StaffName;
-            vm.Email = Email;
-
-
-
 
             var staff =  await _context.staffs.FirstOrDefaultAsync(m => m.StaffId == StaffId);
             if (staff == null)
@@ -51,8 +44,9 @@ namespace ThAmCo.Events.Pages.StaffList
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-            {
+            StaffVM vm = new StaffVM();
+
+            
                 _context.Attach(Staff).State = EntityState.Modified;
 
                 try
@@ -74,8 +68,8 @@ namespace ThAmCo.Events.Pages.StaffList
                 return RedirectToPage("./Index");
             }
 
-            return Page();
-        }
+            
+        
 
         private bool StaffExists(int StaffId)
         {
