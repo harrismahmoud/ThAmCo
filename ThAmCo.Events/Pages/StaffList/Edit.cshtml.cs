@@ -16,7 +16,9 @@ namespace ThAmCo.Events.Pages.StaffList
     {
         private readonly ThAmCo.Events.Data.EventsDBContext _context;
 
-  
+        [BindProperty]
+        public StaffVM vm { get; set; } = new StaffVM();
+
 
         public EditModel(ThAmCo.Events.Data.EventsDBContext context)
         {
@@ -28,12 +30,18 @@ namespace ThAmCo.Events.Pages.StaffList
 
         public async Task<IActionResult> OnGetAsync(int StaffId )
         {
+           vm.StaffId = StaffId;
+            if (StaffId == null)
+            {
+                return NotFound();
+            }
 
             var staff =  await _context.staffs.FirstOrDefaultAsync(m => m.StaffId == StaffId);
             if (staff == null)
             {
                 return NotFound();
             }
+            Staff = staff;
 
 
            

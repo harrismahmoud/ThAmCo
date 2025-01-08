@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using ThAmCo.Events.Data;
+using static ThAmCo.Events.Pages.EventList.AddGuestModel;
 
 namespace ThAmCo.Events.Pages.GuestList
 {
@@ -19,6 +20,10 @@ namespace ThAmCo.Events.Pages.GuestList
         }
 
         public Guest Guest { get; set; } = default!;
+     
+
+
+
 
         public async Task<IActionResult> OnGetAsync(int? GuestId)
         {
@@ -35,7 +40,12 @@ namespace ThAmCo.Events.Pages.GuestList
             else
             {
                 Guest = guest;
+                
             }
+
+
+    
+
             return Page();
         }
     }

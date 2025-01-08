@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ThAmCo.Events.Data;
+using ThAmCo.Events.Pages.ViewModels;
 
 namespace ThAmCo.Events.Pages.EventList
 {
@@ -21,9 +22,18 @@ namespace ThAmCo.Events.Pages.EventList
 
         [BindProperty]
         public GuestBooking GuestBooking { get; set; } = default!;
+        // This is for the dropdown to be populated
+        public SelectList Guests { get; set; }
+
+        // List of guests attending the event
+        public List<Guest> AttendingGuests { get; set; }
+
+        // List of all events a specific guest is associated with
+        public List<GuestEventDetails> GuestEvents { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? EventId)
         {
+          
             if (EventId == null)
             {
                 return NotFound();
@@ -35,8 +45,33 @@ namespace ThAmCo.Events.Pages.EventList
                 return NotFound();
             }
             GuestBooking = guestbooking;
-        
-           ViewData["GuestId"] = new SelectList(_context.Guests, "GuestId", "GuestName");
+
+            // Populate the dropdown with all available guests
+            Guests = new SelectList(await _context.Guests.ToListAsync(), "GuestId", "GuestName");
+
+            // Fetch the list of guests who are attending this event
+            AttendingGuests = await _context.guestBookings
+                .Where(gb => gb.EventId == EventId)
+                .Include(gb => gb.Guest)  // Ensure that Guest is included in the result
+                .Select(gb => gb.Guest)   // Select the actual Guest entity
+                .ToListAsync();
+
+            // If AttendingGuests is null, initialize it as an empty list
+            if (AttendingGuests == null)
+            {
+                AttendingGuests = new List<Guest>();
+            }
+
+            // Get all events for a specific guest
+            GuestEvents = await _context.guestBookings
+                .Where(gb => gb.GuestId == GuestBooking.GuestId)
+                .Include(gb => gb.Event) // Include associated events
+                .Select(gb => new GuestEventDetails
+                {
+                    EventName = gb.Event.EventName,
+                    EventDate = gb.Event.EventDateTime
+                }).ToListAsync();
+
             return Page();
         }
 
@@ -46,8 +81,22 @@ namespace ThAmCo.Events.Pages.EventList
         {
             if (!ModelState.IsValid)
             {
+                // If the model state is not valid, return to the page
+                Guests = new SelectList(await _context.Guests.ToListAsync(), "GuestId", "GuestName");
+                
+
                 return Page();
             }
+
+            // If GuestBooking is new, create it, otherwise modify the existing one
+            if (GuestBooking.GuestId == 0)
+            {
+                ModelState.AddModelError("GuestBooking.GuestId", "Please select a guest.");
+                Guests = new SelectList(await _context.Guests.ToListAsync(), "GuestId", "GuestName");
+                return Page();
+            }
+
+
 
             _context.Attach(GuestBooking).State = EntityState.Modified;
 
@@ -74,5 +123,14 @@ namespace ThAmCo.Events.Pages.EventList
         {
             return _context.guestBookings.Any(e => e.EventId == id);
         }
+
+        // DTO class for displaying guest event details
+        public class GuestEventDetails
+        {
+            public string EventName { get; set; }
+            public DateTime EventDate { get; set; }
+        }
     }
 }
+
+    

@@ -8,6 +8,50 @@
 <h1>AddGuest</h1>
 
 <h4>GuestBooking</h4>
+
+<!-- Display list of attending guests -->
+<h5>Guests Attending:</h5>
+@if (Model.AttendingGuests != null && Model.AttendingGuests.Any())
+{
+    <ul>
+        @foreach (var guest in Model.AttendingGuests)
+        {
+            <li>@guest.GuestName</li>
+        }
+    </ul>
+}
+
+<hr />
+
+<!-- Display details of the currently selected guest and their associated events -->
+@if (Model.GuestEvents != null && Model.GuestEvents.Any())
+{
+    <h5>Events for Guest: @Model.GuestBooking.Guest.GuestName</h5>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Event Name</th>
+                <th>Event Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var guestEvent in Model.GuestEvents)
+            {
+                <tr>
+                    <td>@guestEvent.EventName</td>
+                    <td>@guestEvent.EventDate.ToString("d")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>This guest is not attending any events.</p>
+}
+
+
+
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -15,8 +59,20 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="GuestBooking.GuestId" />
             <input type="hidden" asp-for="GuestBooking.EventId" />
-            <select asp-for="GuestBooking.GuestId" class="form-control" asp-
-                    items="@(ViewData["GuestId"] as SelectList)"></select>
+
+            <div class="form-group">
+                <label for="GuestId">Select a Guest</label>
+                @if (Model.Guests != null && Model.Guests.Any())
+               {
+                <select asp-for="GuestBooking.GuestId" class="form-control" asp-items="Model.Guests">
+                    <option value="">-- Select a Guest --</option>
+                </select>}
+                    else
+                {
+                    <p>No guests available to add.</p>
+                }
+            </div>
+
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
