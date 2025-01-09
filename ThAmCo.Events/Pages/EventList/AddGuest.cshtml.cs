@@ -83,12 +83,9 @@ namespace ThAmCo.Events.Pages.EventList
             {
                 // If the model state is not valid, return to the page
                 Guests = new SelectList(await _context.Guests.ToListAsync(), "GuestId", "GuestName");
-                
-
                 return Page();
             }
 
-            // If GuestBooking is new, create it, otherwise modify the existing one
             if (GuestBooking.GuestId == 0)
             {
                 ModelState.AddModelError("GuestBooking.GuestId", "Please select a guest.");
@@ -96,9 +93,27 @@ namespace ThAmCo.Events.Pages.EventList
                 return Page();
             }
 
+            // Check if the GuestBooking already exists for this event
+            var existingGuestBooking = await _context.guestBookings
+                .FirstOrDefaultAsync(gb => gb.EventId == GuestBooking.EventId && gb.GuestId == GuestBooking.GuestId);
 
+            if (existingGuestBooking != null)
+            {
+                // Optionally, handle this case where the guest is already booked for the event
+                ModelState.AddModelError(string.Empty, "This guest is already added to the event.");
+                Guests = new SelectList(await _context.Guests.ToListAsync(), "GuestId", "GuestName");
+                return Page();
+            }
 
-            _context.Attach(GuestBooking).State = EntityState.Modified;
+            // Add a new guest booking record
+            var newGuestBooking = new GuestBooking
+            {
+                EventId = GuestBooking.EventId,
+                GuestId = GuestBooking.GuestId
+            };
+
+            // Add the new booking to the context
+            _context.guestBookings.Add(newGuestBooking);
 
             try
             {
