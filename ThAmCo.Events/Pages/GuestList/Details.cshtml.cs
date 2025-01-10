@@ -19,13 +19,18 @@ namespace ThAmCo.Events.Pages.GuestList
             _context = context;
         }
 
+        [BindProperty]
+        public GuestBooking GuestBooking { get; set; } = default!;
+
         public Guest Guest { get; set; } = default!;
-     
+      
+        public List<GuestEventDetails> GuestEvents { get; set; }
 
 
 
 
-        public async Task<IActionResult> OnGetAsync(int? GuestId)
+
+        public async Task<IActionResult> OnGetAsync(int GuestId, int EventId)
         {
             if (GuestId == null)
             {
@@ -43,10 +48,28 @@ namespace ThAmCo.Events.Pages.GuestList
                 
             }
 
+           
 
-    
+            // Get all events for a specific guest
+            GuestEvents = await _context.guestBookings
+                .Where(gb => gb.GuestId == GuestBooking.GuestId)
+                .Include(gb => gb.Event) // Include associated events
+                .Select(gb => new GuestEventDetails
+                {
+                    EventName = gb.Event.EventName,
+                    EventDate = gb.Event.EventDateTime
+                }).ToListAsync();
+
+
+
 
             return Page();
+        }
+
+        public class GuestEventDetails
+        {
+            public string EventName { get; set; }
+            public DateTime EventDate { get; set; }
         }
     }
 }

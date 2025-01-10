@@ -29,6 +29,8 @@ namespace ThAmCo.Events.Pages.GuestList
         [BindProperty(SupportsGet = true)]
         public int? GuestId { get; set; }  // Nullable to handle "no selection"
 
+     
+
         public async Task<IActionResult> OnGetAsync(int? GuestId)
         {
             if (GuestId == null)
@@ -62,9 +64,11 @@ namespace ThAmCo.Events.Pages.GuestList
             if (GuestId.HasValue)
             {
                 // Example: update the GuestBooking or other operations
-                GuestBooking.GuestId = GuestId.Value; // Set the selected GuestId
+                GuestBooking.GuestId = GuestId.Value;
+                 // Set the selected GuestId
                 _context.Attach(GuestBooking).State = EntityState.Modified;
             }
+
 
             try
             {

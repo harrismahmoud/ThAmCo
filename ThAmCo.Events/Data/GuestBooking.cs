@@ -1,4 +1,5 @@
-﻿namespace ThAmCo.Events.Data
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+namespace ThAmCo.Events.Data
 {
     public class GuestBooking
     {
@@ -7,8 +8,10 @@
 
         public int EventId { get; set; }
 
+        [ValidateNever]
         public Guest Guest { get; set; }
 
+        [ValidateNever]
         public Event Event { get; set; }
         
     }
