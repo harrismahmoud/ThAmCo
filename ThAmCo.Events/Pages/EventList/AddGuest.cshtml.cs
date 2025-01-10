@@ -39,12 +39,15 @@ namespace ThAmCo.Events.Pages.EventList
                 return NotFound();
             }
 
+        
+
             var guestbooking =  await _context.guestBookings.FirstOrDefaultAsync(m => m.EventId == EventId);
             if (guestbooking == null)
             {
                 return NotFound();
             }
             GuestBooking = guestbooking;
+
 
             // Populate the dropdown with all available guests
             Guests = new SelectList(await _context.Guests.ToListAsync(), "GuestId", "GuestName");
@@ -132,7 +135,7 @@ namespace ThAmCo.Events.Pages.EventList
             }
 
             return RedirectToPage("./Index");
-        }
+        }                   
 
         private bool GuestBookingExists(int id)
         {
