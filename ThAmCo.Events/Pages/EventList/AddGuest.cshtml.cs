@@ -31,6 +31,10 @@ namespace ThAmCo.Events.Pages.EventList
         // List of all events a specific guest is associated with
         public List<GuestEventDetails> GuestEvents { get; set; }
 
+        // Define the GuestId property to bind the drop-down
+        [BindProperty(SupportsGet = true)]
+        public int? EventId { get; set; }  // Nullable to handle "no selection"
+
         public async Task<IActionResult> OnGetAsync(int? EventId)
         {
           
@@ -115,8 +119,12 @@ namespace ThAmCo.Events.Pages.EventList
                 GuestId = GuestBooking.GuestId
             };
 
-            // Add the new booking to the context
-            _context.guestBookings.Add(newGuestBooking);
+            if (EventId.HasValue)
+            {
+                // Example: update the GuestBooking or other operations
+                GuestBooking.GuestId = EventId.Value; // Set the selected GuestId
+                _context.Attach(GuestBooking).State = EntityState.Modified;
+            }
 
             try
             {
