@@ -18,6 +18,8 @@
             // The ID of the food booking related to the event
             public int FoodBookingId { get; set; }
 
+        
+
             // Optionally, you can add validation or formatting logic for presentation
             public string FormattedEventDateTime => EventDateTime.ToString("f"); // Example of formatted DateTime for the view
         }

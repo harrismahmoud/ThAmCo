@@ -10,32 +10,7 @@
 <div>
     <h4>Guest</h4>
 
-    <!-- Display details of the currently selected guest and their associated events -->
-    @if (Model.GuestEvents != null && Model.GuestEvents.Any())
-    {
-        <h5>Events for Guest: @Model.GuestBooking.Guest.GuestName</h5>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Event Name</th>
-                    <th>Event Date</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var guestEvent in Model.GuestEvents)
-                {
-                    <tr>
-                        <td>@guestEvent.EventName</td>
-                        <td>@guestEvent.EventDate.ToString("d")</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    }
-    else
-    {
-        <p>This guest is not attending any events.</p>
-    }
+    
    
     <hr />
     <dl class="row">

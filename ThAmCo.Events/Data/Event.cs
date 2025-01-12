@@ -9,6 +9,8 @@
         public int ReservationId { get; set; }
         public int FoodBookingId { get; set; }
 
+       
+
 
         public ICollection<GuestBooking> GuestBooking { get; set; }
         public ICollection<Staffing> staffing { get; set; }

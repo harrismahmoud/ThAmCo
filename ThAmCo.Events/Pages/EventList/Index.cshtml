@@ -49,10 +49,16 @@
             <td>
                 @Html.DisplayFor(modelItem => item.FoodBookingId)
             </td>
+             
             <td>
                 <a asp-page="./Edit" asp-route-EventId="@item.EventId">Edit</a> |
                 <a asp-page="./Details" asp-route-EventId="@item.EventId">Details</a> |
+                    
                 <a asp-page="./AddGuest" asp-route-EventId="@item.EventId">AddGuest</a> |
+                   
+                <a asp-page="./CancelBooking" asp-route-EventId="@item.EventId">CancelBooking</a>|
+                    
+                <a asp-page="./AddStaff" asp-route-EventId="@item.EventId">AddStaff</a> |
                 <a asp-page="./Delete" asp-route-EventId="@item.EventId">Delete</a>
 
             </td>

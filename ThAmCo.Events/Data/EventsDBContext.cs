@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.Extensions.Options;
 using System.Reflection.Emit;
 
 namespace ThAmCo.Events.Data
@@ -30,6 +31,7 @@ namespace ThAmCo.Events.Data
             optionsBuilder.UseSqlite($"Data Source={DbPath}");
         }
 
+        
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -77,7 +79,7 @@ namespace ThAmCo.Events.Data
 
             builder.Entity<Event>().HasData(
            new Event { EventId = 1, EventName = "Tech Conference", EventDateTime = new DateTime(2024, 12, 15), EventType = "Conference" },
-           new Event { EventId = 2, EventName = "Art Exhibition", EventDateTime = new DateTime(2024, 12, 22), EventType = "Exhibition" }
+           new Event { EventId = 2, EventName = "Art Exhibition", EventDateTime = new DateTime(2024, 12, 22), EventType = "Exhibition"}
        );
 
             // Seed data for Guests

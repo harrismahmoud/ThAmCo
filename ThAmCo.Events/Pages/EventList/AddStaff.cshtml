@@ -1,0 +1,40 @@
+﻿@page
+@model ThAmCo.Events.Pages.EventList.AddStaffModel
+@{
+    ViewData["Title"] = "Add Staff to Event";
+}
+
+<h2>Add Staff to Event</h2>
+
+<!-- Display form for adding staff -->
+<form method="post">
+    <div class="form-group">
+        <label for="StaffId">Select Staff</label>
+        <select asp-for="Staffing.EventId" class="form-control" asp-items="Model.StaffList">
+            <option value="">-- Select Staff --</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="EventId">Event</label>
+        <input type="text" class="form-control" value="@Model.EventId" readonly />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Save</button>
+</form>
+
+<!-- Display errors if there are any -->
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -22,8 +22,7 @@ namespace ThAmCo.Events.Pages.GuestList
         [BindProperty]
         public GuestBooking GuestBooking { get; set; } = default!;
 
-        public IList<Guest> Guest { get; set; }
-        public SelectList GuestsList { get; set; }
+        public List<GuestEventDetails> GuestEvents { get; set; }
 
         // Define the GuestId property to bind the drop-down
         [BindProperty(SupportsGet = true)]
@@ -45,9 +44,6 @@ namespace ThAmCo.Events.Pages.GuestList
             }
             GuestBooking = guestbooking;
 
-            Guest = await _context.Guests.ToListAsync();
-            GuestsList = new SelectList(_context.Guests, "GuestId", "GuestName");
-
             return Page();
         }
 
@@ -55,19 +51,24 @@ namespace ThAmCo.Events.Pages.GuestList
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
+            // Ensure that the EventId property is set before attempting to modify the entity
+            if (GuestBooking.EventId == 0)  // Assuming EventId is a non-nullable integer
             {
-                return Page();
+                ModelState.AddModelError("GuestBooking.EventId", "EventId cannot be zero.");
+               
+
             }
 
-            // Use the selected GuestId for your logic
-            if (GuestId.HasValue)
-            {
-                // Example: update the GuestBooking or other operations
-                GuestBooking.GuestId = GuestId.Value;
-                 // Set the selected GuestId
-                _context.Attach(GuestBooking).State = EntityState.Modified;
-            }
+            //Get all events for a specific guest
+
+           GuestEvents = await _context.guestBookings
+               .Where(gb => gb.GuestId == GuestBooking.GuestId)
+               .Include(gb => gb.Event) // Include associated events
+               .Select(gb => new GuestEventDetails
+               {
+                   EventName = gb.Event.EventName,
+                   EventDate = gb.Event.EventDateTime
+               }).ToListAsync();
 
 
             try
@@ -92,6 +93,12 @@ namespace ThAmCo.Events.Pages.GuestList
         private bool GuestBookingExists(int GuestId)
         {
             return _context.guestBookings.Any(e => e.EventId == GuestId);
+        }
+
+        public class GuestEventDetails
+        {
+            public string EventName { get; set; }
+            public DateTime EventDate { get; set; }
         }
     }
 }
