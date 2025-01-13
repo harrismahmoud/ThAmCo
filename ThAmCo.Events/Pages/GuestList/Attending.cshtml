@@ -7,21 +7,7 @@
 
 <h1>Attend Event</h1>
 
-<p>
-    <a asp-page="./Index">Back to Event List</a>
-</p>
 
-@* <!-- Add the drop-down list for selecting a guest -->
-<form method="post">
-    <div class="form-group">
-        <label for="GuestId">Select a Guest:</label>
-        <select asp-for="GuestId" asp-items="Model.GuestsList" class="form-control">
-            <option value="">-- Select a Guest --</option>
-        </select>
-    </div>
-
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form> *@
 
 <!-- Display details of the currently selected guest and their associated events -->
 @if (Model.GuestEvents != null && Model.GuestEvents.Any())
@@ -30,7 +16,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Event Name: @Model./th>
+                <th>Event Name</th>
                 <th>Event Date</th>
             </tr>
         </thead>
@@ -38,9 +24,7 @@
             @foreach (var guestEvent in Model.GuestEvents)
             {
                 <tr>
-                     <td>@guestEvent.EventName</td> 
-                    
-                    
+                    <td>@guestEvent.EventName</td>
                     <td>@guestEvent.EventDate.ToString("d")</td>
                 </tr>
             }
@@ -51,9 +35,8 @@ else
 {
     <p>This guest is not attending any events.</p>
 }
-        
-    </div>
-</div>
+
+
 
 <div>
     <a asp-page="./Index">Back to List</a>

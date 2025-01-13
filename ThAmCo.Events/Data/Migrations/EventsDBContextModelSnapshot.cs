@@ -23,10 +23,6 @@ namespace ThAmCo.Events.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("BookingRef")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<DateTime>("EventDateTime")
                         .HasColumnType("TEXT");
 
@@ -52,7 +48,6 @@ namespace ThAmCo.Events.Data.Migrations
                         new
                         {
                             EventId = 1,
-                            BookingRef = "",
                             EventDateTime = new DateTime(2024, 12, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EventName = "Tech Conference",
                             EventType = "Conference",
@@ -62,7 +57,6 @@ namespace ThAmCo.Events.Data.Migrations
                         new
                         {
                             EventId = 2,
-                            BookingRef = "",
                             EventDateTime = new DateTime(2024, 12, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EventName = "Art Exhibition",
                             EventType = "Exhibition",

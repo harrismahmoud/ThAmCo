@@ -14,6 +14,7 @@ namespace ThAmCo.Events.Pages.StaffList
     public class AddEventModel : PageModel
     {
         private readonly ThAmCo.Events.Data.EventsDBContext _context;
+        
 
         public AddEventModel(ThAmCo.Events.Data.EventsDBContext context)
         {
@@ -21,24 +22,24 @@ namespace ThAmCo.Events.Pages.StaffList
         }
 
         [BindProperty]
-        public Staffing Staffing { get; set; } = default!;
-        public SelectList Staff{ get; set; }
+        public Staff Staff { get; set; } = default!;
+        public SelectList StaffList{ get; set; }
 
-        public async Task<IActionResult> OnGetAsync(string id)
+        public async Task<IActionResult> OnGetAsync(string EventId)
         {
-            if (id == null)
+            if (EventId == null)
             {
                 return NotFound();
             }
 
-            var staffing =  await _context.staffings.FirstOrDefaultAsync(m => m.StaffRole == id);
+            var staffing =  await _context.staffs.FirstOrDefaultAsync(m => m.StaffName == EventId);
             if (staffing == null)
             {
                 return NotFound();
             }
-            Staffing = staffing;
+            Staff = Staff;
            
-            Staff = new SelectList(await _context.Guests.ToListAsync(), "EventId", "StaffId");
+            StaffList = new SelectList(await _context.staffs.ToListAsync(), "EventId", "StaffId");
 
             return Page();
         }
@@ -50,11 +51,11 @@ namespace ThAmCo.Events.Pages.StaffList
             if (!ModelState.IsValid)
             {
                 ModelState.AddModelError("Staffing.StaffId", "Please select a staff.");
-                Staff = new SelectList(await _context.Guests.ToListAsync(), "StaffId", "EventId");
+                StaffList = new SelectList(await _context.Guests.ToListAsync(), "StaffId", "EventId");
                 return Page();
             }
 
-            _context.Attach(Staffing).State = EntityState.Modified;
+            _context.Attach(Staff).State = EntityState.Modified;
 
             try
             {
@@ -62,7 +63,7 @@ namespace ThAmCo.Events.Pages.StaffList
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!StaffingExists(Staffing.StaffRole))
+                if (!StaffingExists(Staff.StaffName))
                 {
                     return NotFound();
                 }
@@ -77,7 +78,7 @@ namespace ThAmCo.Events.Pages.StaffList
 
         private bool StaffingExists(string id)
         {
-            return _context.staffings.Any(e => e.StaffRole == id);
+            return _context.staffs.Any(e => e.StaffName == id);
         }
     }
 }

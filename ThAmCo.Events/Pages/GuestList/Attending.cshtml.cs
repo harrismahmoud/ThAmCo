@@ -20,17 +20,18 @@ namespace ThAmCo.Events.Pages.GuestList
         }
 
         [BindProperty]
-        public GuestBooking GuestBooking { get; set; } = default!;
+        public GuestBooking GuestBooking { get; set; }
 
         public List<GuestEventDetails> GuestEvents { get; set; }
+        public List<Guest> AttendingGuests { get; set; }
 
         // Define the GuestId property to bind the drop-down
         [BindProperty(SupportsGet = true)]
-        public int? GuestId { get; set; }  // Nullable to handle "no selection"
+        public int? EventId { get; set; }  // Nullable to handle "no selection"
 
      
 
-        public async Task<IActionResult> OnGetAsync(int? GuestId)
+        public async Task<IActionResult> OnGetAsync(int? GuestId )
         {
             if (GuestId == null)
             {
@@ -43,6 +44,32 @@ namespace ThAmCo.Events.Pages.GuestList
                 return NotFound();
             }
             GuestBooking = guestbooking;
+
+            
+
+            // Fetch the list of guests who are attending this event
+            
+              AttendingGuests = await _context.guestBookings
+                .Where(gb => gb.EventId == GuestId)
+                .Include(gb => gb.Guest)  // Ensure that Guest is included in the result
+                .Select(gb => gb.Guest)   // Select the actual Guest entity
+                .ToListAsync();
+
+            // If AttendingGuests is null, initialize it as an empty list
+            if (AttendingGuests == null)
+            {
+                AttendingGuests = new List<Guest>();
+            }
+
+            GuestEvents = await _context.guestBookings
+           .Where(gb => gb.GuestId == GuestBooking.GuestId)
+           .Include(gb => gb.Event) // Include associated events
+           .Select(gb => new GuestEventDetails
+           {
+               EventName = gb.Event.EventName,
+               EventDate = gb.Event.EventDateTime
+           }).ToListAsync();
+
 
             return Page();
         }
@@ -61,15 +88,21 @@ namespace ThAmCo.Events.Pages.GuestList
 
             //Get all events for a specific guest
 
-           GuestEvents = await _context.guestBookings
-               .Where(gb => gb.GuestId == GuestBooking.GuestId)
-               .Include(gb => gb.Event) // Include associated events
-               .Select(gb => new GuestEventDetails
-               {
-                   EventName = gb.Event.EventName,
-                   EventDate = gb.Event.EventDateTime
-               }).ToListAsync();
+            //GuestEvents = await _context.guestBookings
+            //   .Where(gb => gb.GuestId == GuestBooking.GuestId)
+            //   .Include(gb => gb.Event) // Include associated events
+            //   .Select(gb => new GuestEventDetails
+            //   {
+            //       EventName = gb.Event.EventName,
+            //       EventDate = gb.Event.EventDateTime
+            //   }).ToListAsync();
 
+            if (EventId.HasValue)
+            {
+                // Example: update the GuestBooking or other operations
+                GuestBooking.GuestId = EventId.Value; // Set the selected GuestId
+                _context.Attach(GuestBooking).State = EntityState.Modified;
+            }
 
             try
             {
@@ -77,7 +110,7 @@ namespace ThAmCo.Events.Pages.GuestList
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!GuestBookingExists(GuestBooking.EventId))
+                if (!GuestBookingExists(GuestBooking.GuestId))
                 {
                     return NotFound();
                 }

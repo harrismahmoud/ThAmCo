@@ -11,8 +11,8 @@ using ThAmCo.Events.Data;
 namespace ThAmCo.Events.Data.Migrations
 {
     [DbContext(typeof(EventsDBContext))]
-    [Migration("20241212120737_InitialCreate1")]
-    partial class InitialCreate1
+    [Migration("20250112235520_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
