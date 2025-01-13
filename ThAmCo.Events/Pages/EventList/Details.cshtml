@@ -43,6 +43,47 @@
         </dd>
     </dl>
 </div>
+
+ <!-- Display list of attending guests -->
+<h5>Guests Attending:</h5>
+@if (Model.AttendingGuests != null && Model.AttendingGuests.Any())
+{
+    <ul>
+        @foreach (var guest in Model.AttendingGuests)
+        {
+            <li>@guest.GuestName</li>
+        }
+    </ul>
+} 
+
+
+<h3>Staff Assigned to this Event</h3>
+
+@if (Model.AssignedStaff != null && Model.AssignedStaff.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Staff Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var staff in Model.AssignedStaff)
+            {
+                <tr>
+                    <td>@staff.StaffName</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No staff have been assigned to this event yet.</p>
+}
+
+
+
 <div>
     <a asp-page="./Edit" asp-route-id="@Model.Event.EventId">Edit</a> |
     <a asp-page="./Index">Back to List</a>

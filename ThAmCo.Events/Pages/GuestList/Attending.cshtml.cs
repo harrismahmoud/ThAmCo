@@ -123,7 +123,7 @@ namespace ThAmCo.Events.Pages.GuestList
             return RedirectToPage("./Index");
         }
 
-        private bool GuestBookingExists(int GuestId)
+        private bool GuestBookingExists(int? GuestId)
         {
             return _context.guestBookings.Any(e => e.EventId == GuestId);
         }

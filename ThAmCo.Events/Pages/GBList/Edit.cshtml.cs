@@ -68,7 +68,7 @@ namespace ThAmCo.Events.Pages.GBList
             return RedirectToPage("./Index");
         }
 
-        private bool GuestBookingExists(int EventId)
+        private bool GuestBookingExists(int? EventId)
         {
             return _context.guestBookings.Any(e => e.EventId == EventId);
         }

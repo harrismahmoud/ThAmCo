@@ -45,7 +45,7 @@ namespace ThAmCo.Events.Pages.EventList
 
         
 
-            var guestbooking =  await _context.guestBookings.FirstOrDefaultAsync(m => m.EventId == EventId);
+            var guestbooking =  await _context.guestBookings.FirstOrDefaultAsync(m => m.GuestId == EventId);
             if (guestbooking == null)
             {
                 return NotFound();
@@ -56,28 +56,6 @@ namespace ThAmCo.Events.Pages.EventList
             // Populate the dropdown with all available guests
             Guests = new SelectList(await _context.Guests.ToListAsync(), "GuestId", "GuestName");
 
-            // Fetch the list of guests who are attending this event
-            AttendingGuests = await _context.guestBookings
-                .Where(gb => gb.EventId == EventId)
-                .Include(gb => gb.Guest)  // Ensure that Guest is included in the result
-                .Select(gb => gb.Guest)   // Select the actual Guest entity
-                .ToListAsync();
-
-            // If AttendingGuests is null, initialize it as an empty list
-            if (AttendingGuests == null)
-            {
-                AttendingGuests = new List<Guest>();
-            }
-
-            // Get all events for a specific guest
-            GuestEvents = await _context.guestBookings
-                .Where(gb => gb.GuestId == GuestBooking.GuestId)
-                .Include(gb => gb.Event) // Include associated events
-                .Select(gb => new GuestEventDetails
-                {
-                    EventName = gb.Event.EventName,
-                    EventDate = gb.Event.EventDateTime
-                }).ToListAsync();
 
             return Page();
         }
@@ -145,7 +123,7 @@ namespace ThAmCo.Events.Pages.EventList
             return RedirectToPage("./Index");
         }                   
 
-        private bool GuestBookingExists(int id)
+        private bool GuestBookingExists(int? id)
         {
             return _context.guestBookings.Any(e => e.EventId == id);
         }

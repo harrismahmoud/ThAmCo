@@ -9,7 +9,7 @@
 
 <h4>GuestBooking</h4>
 
-<!-- Display list of attending guests -->
+@* <!-- Display list of attending guests -->
 <h5>Guests Attending:</h5>
 @if (Model.AttendingGuests != null && Model.AttendingGuests.Any())
 {
@@ -19,11 +19,11 @@
             <li>@guest.GuestName</li>
         }
     </ul>
-}
+} *@
 
 <hr />
 
-<!-- Display details of the currently selected guest and their associated events -->
+@* <!-- Display details of the currently selected guest and their associated events -->
 @if (Model.GuestEvents != null && Model.GuestEvents.Any())
 {
     <h5>Events for Guest: @Model.GuestBooking.Guest.GuestName</h5>
@@ -48,7 +48,7 @@
 else
 {
     <p>This guest is not attending any events.</p>
-}
+} *@
 
 
 

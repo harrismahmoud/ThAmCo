@@ -23,14 +23,12 @@ namespace ThAmCo.Events.Pages.GuestList
         public GuestBooking GuestBooking { get; set; } = default!;
 
         public Guest Guest { get; set; } = default!;
-      
-      
+
+        
 
 
 
-
-
-        public async Task<IActionResult> OnGetAsync(int GuestId)
+    public async Task<IActionResult> OnGetAsync(int GuestId)
         {
             if (GuestId == null)
             {
@@ -47,6 +45,9 @@ namespace ThAmCo.Events.Pages.GuestList
                 Guest = guest;
                 
             }
+
+
+
 
             return Page();
         }

@@ -2,30 +2,49 @@
 @model ThAmCo.Events.Pages.EventList.CancelBookingModel
 
 @{
-    ViewData["Title"] = "CancelBooking";
+    ViewData["Title"] = "Cancel Booking";
 }
 
-<h1>CancelBooking</h1>
+<h1>Cancel Booking</h1>
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>GuestBooking</h4>
+    <h4>Guest Booking</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.GuestBooking.Guest)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.GuestBooking.Guest.GuestId)
+            <!-- Displaying the Guest's Name -->
+            @Html.DisplayFor(model => model.GuestBooking.Guest.GuestName)
         </dd>
+
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.GuestBooking.Event)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.GuestBooking.Event.EventId)
+            <!-- Displaying the Event's Name -->
+            @Html.DisplayFor(model => model.GuestBooking.Event.EventName)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.GuestBooking.GuestId)
+        </dt>
+        <dd class="col-sm-10">
+            <!-- Displaying the GuestId -->
+            @Html.DisplayFor(model => model.GuestBooking.GuestId)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.GuestBooking.EventId)
+        </dt>
+        <dd class="col-sm-10">
+            <!-- Displaying the EventId -->
+            @Html.DisplayFor(model => model.GuestBooking.EventId)
         </dd>
     </dl>
-    
+
     <form method="post">
         <input type="hidden" asp-for="GuestBooking.GuestId" />
         <input type="hidden" asp-for="GuestBooking.EventId" />

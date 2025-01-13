@@ -1,40 +1,35 @@
 ﻿@page
 @model ThAmCo.Events.Pages.EventList.AddStaffModel
+
 @{
-    ViewData["Title"] = "Add Staff to Event";
+    ViewData["Title"] = "Add Staff";
 }
 
-<h2>Add Staff to Event</h2>
+<h1>Add Staff</h1>
 
-<!-- Display form for adding staff -->
+<p>
+    <a asp-page="./Index">Back to Event List</a>
+</p>
+
+<!-- Create a form to select a staff member -->
 <form method="post">
     <div class="form-group">
-        <label for="StaffId">Select Staff</label>
-        <select asp-for="Staffing.EventId" class="form-control" asp-items="Model.StaffList">
-            <option value="">-- Select Staff --</option>
+        <label for="StaffId">Select a Staff Member:</label>
+        <select asp-for="Staff.StaffId" asp-items="Model.StaffList" class="form-control">
+            <option value="">-- Select a Staff Member --</option>
         </select>
     </div>
-
     <div class="form-group">
-        <label for="EventId">Event</label>
-        <input type="text" class="form-control" value="@Model.EventId" readonly />
-    </div>
-
-    <button type="submit" class="btn btn-primary">Save</button>
+        <input type="submit" value="Save" class="btn btn-primary" />
+    <div>
 </form>
-
-<!-- Display errors if there are any -->
-<div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-
-
-    </div>
-</div>
-
 <div>
-    <a asp-page="./Index">Back to List</a>
+
 </div>
+
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

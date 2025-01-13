@@ -20,6 +20,7 @@ namespace ThAmCo.Events.Pages.StaffList
 
         public Staff Staff { get; set; } = default!;
 
+        public List<Staff> AssignedStaff { get; set; } = new List<Staff>();
         public async Task<IActionResult> OnGetAsync(int? StaffId)
         {
             if (StaffId == null)
@@ -36,6 +37,15 @@ namespace ThAmCo.Events.Pages.StaffList
             {
                 Staff = staff;
             }
+
+            // Retrieve the staff members assigned to the event
+            AssignedStaff = await _context.staffings
+                .Where(s => s.EventId == StaffId)
+                .Include(s => s.Staff)  // Include the related Staff
+                .Select(s => s.Staff)  // Select the actual Staff entity
+                .ToListAsync();
+
+
             return Page();
         }
     }

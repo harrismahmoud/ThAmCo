@@ -41,14 +41,14 @@ namespace ThAmCo.Events.Pages.EventList
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int? id)
+        public async Task<IActionResult> OnPostAsync(int? EventId, int? GuestId)
         {
-            if (id == null)
+            if (EventId == null)
             {
                 return NotFound();
             }
 
-            var guestbooking = await _context.guestBookings.FindAsync(id);
+            var guestbooking = await _context.guestBookings.FindAsync(EventId,GuestId);
             if (guestbooking != null)
             {
                 GuestBooking = guestbooking;
